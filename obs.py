@@ -25,19 +25,21 @@ def invokation_llm(input):
     langfuse.update_current_generation(model = "Claude Fable", metadata = {"temparature": 0.4, "env":"qa"})
     if input in cache:
         response = cache[input]
+        print("response from cache")
     else:
         response = llm.invoke(input).content
         print(response)
         cache[input] = response
-        return response
+    return response
 
 # input = "Why is ocean blue? tell me it in small sentence."
 prompt = ""
 while prompt != "exit":
     prompt = input("Enter prompt")
-    invokation_llm(prompt)
-    print(f"=============The stored response is ======{cache[prompt]}")
-    print(cache)
+    response = invokation_llm(prompt)
+    # print(f"=============The stored response is ======{cache[prompt]}")
+    # print(cache)
+    print(response)
 
 with open("cache.json", "w") as f:
     json.dump(cache, f, indent =2)
