@@ -5,7 +5,14 @@ from langchain_ollama import ChatOllama
 
 load_dotenv()
 
-cache = {}
+import json
+import os
+
+if os.path.exists("cache.json"):
+    with open("cache.json", "r") as f:
+        cache = json.load(f)
+else:
+    cache = {}
 
 langfuse = Langfuse()
 
@@ -31,6 +38,9 @@ while prompt != "exit":
     invokation_llm(prompt)
     print(f"=============The stored response is ======{cache[prompt]}")
     print(cache)
+
+with open("cache.json", "w") as f:
+    json.dump(cache, f, indent =2)
 
 # @observe
 # def llm_response(input):
