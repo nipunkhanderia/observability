@@ -28,8 +28,8 @@ def invokation_llm(input):
         print("response from cache")
     else:
         response = llm.invoke(input).content
-        print(response)
         cache[input] = response
+        print("response from llm and not cache")
     return response
 
 # input = "Why is ocean blue? tell me it in small sentence."
